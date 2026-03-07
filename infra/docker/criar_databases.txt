@@ -1,0 +1,4 @@
+﻿# Cria o container Docker com o DW simulado da aplicacao
+# Porta local 5780 -> porta do container 5432
+
+docker run -d --name db_bi_dw -p 5780:5432 -e POSTGRES_DB=bi_dw -e POSTGRES_USER=bi_user -e POSTGRES_PASSWORD=bi_pass postgres:16.1
