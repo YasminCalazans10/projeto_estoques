@@ -1,0 +1,396 @@
+/* =========================================================
+   Plataforma BI — Estoques
+   ========================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #3f2a4a;
+  background: #faf5ff; /* pale lilac */
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   Cabeçalho
+   --------------------------------------------------------- */
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid #f3e8ff;
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #d8b4e2 0%, #f472b6 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(244, 114, 182, 0.3);
+}
+
+.app-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #3f2a4a;
+}
+
+.app-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.nav-item {
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: #927f9e;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  background: #fdf2f8;
+  color: #db2777;
+}
+
+.nav-item.active {
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  color: #9d174d;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Página principal
+   --------------------------------------------------------- */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #3f2a4a;
+  margin-bottom: 4px;
+}
+
+.page-sub {
+  font-size: 13px;
+  color: #8c789e;
+  margin-bottom: 24px;
+}
+
+/* ---------------------------------------------------------
+   Alerta de erro
+   --------------------------------------------------------- */
+.alert-error {
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  color: #be185d;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ---------------------------------------------------------
+   Filtros
+   --------------------------------------------------------- */
+.filter-card {
+  background: #ffffff;
+  border: 1px solid #fae8ff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(216, 180, 226, 0.15);
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #a87ebb;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid #e9d5ee;
+  border-radius: 6px;
+  background: #fff;
+  color: #3f2a4a;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+select:focus {
+  outline: none;
+  border-color: #d8b4e2;
+  box-shadow: 0 0 0 3px #fdf2f8;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 1px;
+}
+
+.btn {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #e9d5ee;
+  cursor: pointer;
+  background: #ffffff;
+  color: #3f2a4a;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: #fdf2f8;
+  border-color: #fbcfe8;
+  color: #db2777;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #c084e6 0%, #f472b6 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(244, 114, 182, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #a855f7 0%, #db2777 100%);
+  color: #fff;
+  border: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(244, 114, 182, 0.35);
+}
+
+.btn-link {
+  font-size: 13px;
+  color: #a855f7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 4px;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.btn-link:hover {
+  color: #db2777;
+}
+
+/* ---------------------------------------------------------
+   KPIs
+   --------------------------------------------------------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: #ffffff;
+  border: 1px solid #fae8ff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 12px rgba(216, 180, 226, 0.15);
+  transition: transform 0.2s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(216, 180, 226, 0.25);
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: #927f9e;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #a855f7;
+}
+
+/* ---------------------------------------------------------
+   Grade de gráficos
+   --------------------------------------------------------- */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.chart-card {
+  background: #ffffff;
+  border: 1px solid #fae8ff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  box-shadow: 0 4px 12px rgba(216, 180, 226, 0.15);
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3f2a4a;
+  margin-bottom: 2px;
+}
+
+.chart-sub {
+  font-size: 12px;
+  color: #927f9e;
+  margin-bottom: 14px;
+}
+
+.chart-area {
+  flex: 1;
+  border: 1px dashed #fbcfe8;
+  border-radius: 8px;
+  background: #fdf2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+
+.chart-placeholder-text {
+  font-size: 13px;
+  color: #d946ef;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Página Inicial (Index)
+   --------------------------------------------------------- */
+.index-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 180px); /* Descontando header e padding */
+  gap: 16px;
+}
+
+.index-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0;
+  /* Cor rosa escuro (vibrante e marcante) */
+  background: linear-gradient(135deg, #be185d 0%, #db2777 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #be185d;
+}
+
+.index-subtitle {
+  font-size: 16px;
+  color: #927f9e;
+  font-weight: 400;
+  max-width: 400px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.index-action {
+  margin-top: 16px;
+}
+
+.btn-index {
+  display: inline-block;
+  padding: 14px 34px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  /* Paleta meiga e elegante: lilás para rosa */
+  background: linear-gradient(135deg, #d8b4e2 0%, #f472b6 100%);
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-index:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(244, 114, 182, 0.5);
+  background: linear-gradient(135deg, #c084e6 0%, #db2777 100%);
+}
+
+/* ---------------------------------------------------------
+   Responsivo
+   --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .filter-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .filter-row {
+    grid-template-columns: 1fr;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

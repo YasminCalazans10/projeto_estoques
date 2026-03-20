@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Plataforma BI{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ===== Cabeçalho da aplicação ===== -->
+  <header class="app-header">
+    <div class="app-logo">BI</div>
+    <span class="app-name">Plataforma BI</span>
+    <nav class="app-nav">
+      <a href="/estoques"
+         class="nav-item {% if request.path == '/estoques' %}active{% endif %}">
+        Estoques
+      </a>
+      <a href="/produtos"
+         class="nav-item {% if request.path == '/produtos' %}active{% endif %}">
+        Produtos
+      </a>
+      <a href="/vendas"
+         class="nav-item {% if request.path == '/vendas' %}active{% endif %}">
+        Vendas
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== Conteúdo principal ===== -->
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

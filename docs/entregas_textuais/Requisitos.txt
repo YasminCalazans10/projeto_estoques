@@ -1,0 +1,40 @@
+*Descrição do Problema Organizacional*
+
+A empresa atualmente realiza a geração de relatórios gerenciais por meio de planilhas eletrônicas, o que gera retrabalho, inconsistência de dados e falta de padronização.
+Não existe um acesso remoto estruturado às informações, dificultando a tomada de decisão fora do ambiente físico da empresa.
+Além disso, os gestores não possuem uma visão consolidada dos indicadores estratégicos, o que compromete a análise global do desempenho organizacional.
+A empresa também demonstra preocupação com segurança da informação e escalabilidade da solução, além de não desejar investir em desenvolvimento próprio.
+Diante desse cenário, surge a necessidade de uma solução web de Business Intelligence (BI) que permita visualização de indicadores, com segurança, escalabilidade e sem custo de desenvolvimento interno.
+
+*Requisitos Funcionais (RF)*
+
+RF01 – O sistema deve permitir que gestores visualizem indicadores de desempenho em painéis (dashboards).
+RF02 – O sistema deve permitir a consolidação automática de dados provenientes das planilhas atuais da empresa.
+RF03 – O sistema deve permitir filtros de visualização por período, setor ou tipo de indicador.
+RF04 – O sistema deve permitir exportação de relatórios em formato PDF ou planilha.
+RF05 – O sistema deve permitir diferentes níveis de acesso (ex.: administrador e gestor).
+
+*Requisitos Não Funcionais (RNF)*
+
+RNF01 – O sistema deve garantir autenticação de usuários antes do acesso às informações.
+RNF02 – O sistema deve estar disponível para acesso via navegador web, sem necessidade de instalação local.
+RNF03 – O sistema deve suportar aumento do volume de dados e usuários sem perda significativa de desempenho.
+RNF04 – O sistema deve garantir a confidencialidade dos dados por meio de mecanismos de proteção contra acesso não autorizado.
+RNF05 – O sistema deve possuir disponibilidade mínima de 99% durante horário comercial.
+
+*Delimitação de Escopo (Fora do Escopo)*
+
+Neste projeto não serão tratados:
+Desenvolvimento de um sistema próprio do zero
+Implementação de infraestrutura física (servidores locais)
+Treinamento detalhado de usuários
+Customizações específicas para cada setor
+Integração com sistemas externos não relacionados às planilhas atuais
+
+*Justificativa de Requisitos*
+
+Justificativa do RF01 (Visualização de dashboards):
+A ausência de visão consolidada é um dos principais problemas atuais. O dashboard centraliza indicadores e melhora a tomada de decisão estratégica.
+
+Justificativa do RNF01 (Autenticação de usuários):
+Como se trata de dados gerenciais e estratégicos, é essencial garantir que apenas usuários autorizados tenham acesso às informações, reduzindo riscos de vazamento.
