@@ -1,36 +1,12 @@
-# Projeto BI com Flask
+﻿# Documentacao do Projeto
 
-Sistema web em Flask para visualizar dashboards de **Vendas**, **Produtos** e **Estoques** usando PostgreSQL.
-
-## Como executar
-
-1. Crie e ative um ambiente virtual
-2. Instale as dependências:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Configure o arquivo `.env`
-4. Execute seu script SQL de criação do DW no PostgreSQL
-5. Rode a aplicação:
-
-```bash
-python run.py
-```
-
-6. Acesse:
-
-```text
-http://127.0.0.1:5000
-```
+Esta pasta e dedicada as entregas textuais dos alunos (nao codigo).
 
 ## Estrutura
+- `entregas_textuais/`: arquivos das entregas por etapa.
+- `guias/`: orientacoes de escopo, criterios e roteiro.
 
-- `app/` aplicação Flask
-- `app/services/bi_queries.py` consultas analíticas
-- `app/sql/` consultas SQL por domínio
-- `app/templates/` telas HTML
-- `app/static/css/style.css` estilos
-- `db/init/cria_fontes.sql` observações de inicialização
-- `docs/` documentação complementar
+## Guias principais
+- `guias/ARQUITETURA_PROJETO.md`: arquitetura oficial, papeis de cada arquivo e divisao por grupos.
+- `guias/KPIS_E_INTERPRETACAO.md`: descricao dos KPIs e como interpretar os indicadores.
+- `guias/RUBRICA_AVALIACAO.md`: criterios de avaliacao das entregas.
