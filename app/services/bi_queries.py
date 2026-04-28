@@ -1,15 +1,16 @@
 """
-Camada de serviço para o painel de Estoques.
+Módulo da Camada de Serviço (Service Layer) para as visualizações de Estoques.
+Centraliza as funções de extração de dados analíticos, executando comandos SQL 
+direto no Data Warehouse (em cima de Views Materializadas) do PostgreSQL.
 
-Nesta entrega os dados são simulados (mock).
-Na próxima etapa, substitua os blocos de mock pela consulta real
-ao banco de dados (ex: pandas + SQLAlchemy / psycopg2).
+O objetivo é separar de forma limpa a lógica do banco do controlador REST.
+A função principal retorna os "eixos X/Y" estruturados pra facilitar o frontend via Plotly.
 """
 
 from app.db import query_all
 
 # ---------------------------------------------------------------------------
-# Funções de listagem para os filtros
+# Funções Isoladas: Populam os "Combobox" de Filtro na página web
 # ---------------------------------------------------------------------------
 
 def get_filiais() -> list[str]:
@@ -39,10 +40,16 @@ def get_familias() -> list[str]:
 
 def get_dados_estoques(filters: dict) -> tuple[dict, dict, str | None]:
     """
+    Função agregadora para o Dashboard de Estoques.
+    Recebe os filtros definidos pelo usuário da Web (Filial, CD, Família), formata e anexa essas
+    restrições em `params` do SQLAlchemy contra a query agregada.
+    
     Aplica os filtros recebidos e retorna:
-      - charts : dicionário com os dados brutos dos 4 gráficos
-      - kpis   : indicadores resumidos exibidos nos cards
-      - error  : mensagem de erro (None se tudo OK)
+      - charts : Dicionário pivotado onde cada chave representa um gráfico, preparado para 
+                 facilitar a inserção (x, y) de forma direta nos cards do frontend Plotly.
+      - kpis   : Dicionário contendo os 4 KPIs estruturados do topo do painel, 
+                 já processados com cálculos contábeis (ex: x.MM / %).
+      - error  : Uma string descrevendo falhas catastróficas que interrompem o acesso.
     """
     error = None
     

@@ -91,42 +91,134 @@
 <section class="charts-grid">
 
   <!-- Gráfico 1 -->
-  <div class="chart-card">
-    <p class="chart-title">Valor mensal em estoque</p>
-    <p class="chart-sub">Evolução do valor de estoque no período</p>
-    <div class="chart-area" id="chart-valor-mensal">
-      {# Plotly será inserido aqui no próximo requisito #}
-      <span class="chart-placeholder-text">valor_mensal</span>
-    </div>
+  <div class="chart-card" style="min-height: auto;">
+    <p class="chart-title" style="margin-bottom: 5px;">Valor mensal em estoque</p>
+    <p class="chart-sub" style="margin-bottom: 20px;">Evolução do valor de estoque no período</p>
+    <div class="chart-area" id="chart-valor-mensal" style="display: block; width: 100%; height: 480px; border: none; background: transparent;"></div>
+    <p class="chart-sub" style="margin-top: 25px; color: #d946ef; line-height: 1.4; border-top: 1px dashed #fbcfe8; padding-top: 15px; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: normal;">
+      Justificativa: Este gráfico temporal demonstra a flutuação do capital imobilizado. Ele é essencial para monitorar tendências de aumento ou redução do valor total do estoque, ajudando a identificar se a empresa está retendo excesso de capital ao longo dos meses.
+    </p>
   </div>
 
   <!-- Gráfico 2 -->
-  <div class="chart-card">
-    <p class="chart-title">Ruptura mensal</p>
-    <p class="chart-sub">Percentual de itens em ruptura por mês</p>
-    <div class="chart-area" id="chart-ruptura-mensal">
-      <span class="chart-placeholder-text">ruptura_mensal</span>
-    </div>
+  <div class="chart-card" style="min-height: auto;">
+    <p class="chart-title" style="margin-bottom: 5px;">Ruptura mensal</p>
+    <p class="chart-sub" style="margin-bottom: 20px;">Percentual de itens em ruptura por mês</p>
+    <div class="chart-area" id="chart-ruptura-mensal" style="display: block; width: 100%; height: 480px; border: none; background: transparent;"></div>
+    <p class="chart-sub" style="margin-top: 25px; color: #d946ef; line-height: 1.4; border-top: 1px dashed #fbcfe8; padding-top: 15px; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: normal;">
+      Justificativa: Gráfico temporal comparando o risco de falta de estoque (taxa_ruptura_pct). Avaliar a ruptura mês a mês permite entender a eficácia das compras e garantir a disponibilidade de produtos para evitar perda de vendas.
+    </p>
   </div>
 
   <!-- Gráfico 3 -->
-  <div class="chart-card">
-    <p class="chart-title">Giro por CD</p>
-    <p class="chart-sub">Comparativo de giro entre centros de distribuição</p>
-    <div class="chart-area" id="chart-giro-cd">
-      <span class="chart-placeholder-text">giro_cd</span>
-    </div>
+  <div class="chart-card" style="min-height: auto;">
+    <p class="chart-title" style="margin-bottom: 5px;">Giro por CD</p>
+    <p class="chart-sub" style="margin-bottom: 20px;">Comparativo de giro entre centros de distribuição</p>
+    <div class="chart-area" id="chart-giro-cd" style="display: block; width: 100%; height: 480px; border: none; background: transparent;"></div>
+    <p class="chart-sub" style="margin-top: 25px; color: #d946ef; line-height: 1.4; border-top: 1px dashed #fbcfe8; padding-top: 15px; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: normal;">
+      Justificativa: Mostra o giro_estoque consolidado agrupado por CDs. Serve para comparar quais centros de distribuição são mais eficientes na movimentação do inventário e quais podem ter gargalos ou excesso de estoque parado.
+    </p>
   </div>
 
   <!-- Gráfico 4 -->
-  <div class="chart-card">
-    <p class="chart-title">Cobertura por filial</p>
-    <p class="chart-sub">Dias de cobertura de estoque por filial</p>
-    <div class="chart-area" id="chart-cobertura-filial">
-      <span class="chart-placeholder-text">cobertura_filial</span>
-    </div>
+  <div class="chart-card" style="min-height: auto;">
+    <p class="chart-title" style="margin-bottom: 5px;">Cobertura por filial</p>
+    <p class="chart-sub" style="margin-bottom: 20px;">Dias de cobertura de estoque por filial</p>
+    <div class="chart-area" id="chart-cobertura-filial" style="display: block; width: 100%; height: 480px; border: none; background: transparent;"></div>
+    <p class="chart-sub" style="margin-top: 25px; color: #d946ef; line-height: 1.4; border-top: 1px dashed #fbcfe8; padding-top: 15px; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: normal;">
+      Justificativa: Identifica a média de dias_cobertura_medio de todas as filiais. Isso ajuda a sinalizar o risco operacional: filiais com muitos dias de cobertura têm excesso de estoque, enquanto as com poucos correm alto risco de falta.
+    </p>
   </div>
 
 </section>
+
+
+
+<!-- Scripts para os gráficos Plotly -->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script>
+  // Carrega os dados passados pelo Jinja para o JS
+  const chartData = {{ charts | tojson }};
+  
+  // Cores institucionais do tema (lilás/rosa)
+  const colors = {
+    primary: '#8b5cf6',
+    secondary: '#ec4899',
+    accent: '#d946ef',
+    danger: '#ff91a4'
+  };
+
+  // Constante para fontes Open Sans pequenas conforme pedido
+  const openSansFont = { family: "'Open Sans', sans-serif", size: 9 };
+
+  // 1. Gráfico de Valor Mensal
+  Plotly.newPlot('chart-valor-mensal', [{
+    x: chartData.valor_mensal.labels,
+    y: chartData.valor_mensal.valores,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: colors.primary, width: 3 },
+    marker: { size: 8 },
+    name: 'Valor R$'
+  }], {
+    font: openSansFont,
+    margin: { t: 20, r: 20, l: 60, b: 60 },
+    xaxis: { title: { text: 'Mês', standoff: 40 }, showgrid: false, automargin: true },
+    yaxis: { title: { text: 'Valor do Estoque (R$)', standoff: 20 }, automargin: true },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent'
+  }, {responsive: true});
+
+  // 2. Gráfico de Ruptura Mensal
+  Plotly.newPlot('chart-ruptura-mensal', [{
+    x: chartData.ruptura_mensal.labels,
+    y: chartData.ruptura_mensal.percentuais,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: colors.danger, width: 3 },
+    marker: { size: 8 },
+    name: 'Ruptura %'
+  }], {
+    font: openSansFont,
+    margin: { t: 20, r: 20, l: 60, b: 60 },
+    xaxis: { title: { text: 'Mês', standoff: 40 }, showgrid: false, automargin: true },
+    yaxis: { title: { text: 'Taxa de Ruptura (%)', standoff: 20 }, automargin: true },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent'
+  }, {responsive: true});
+
+  // 3. Gráfico de Giro por CD
+  Plotly.newPlot('chart-giro-cd', [{
+    x: chartData.giro_cd.centros,
+    y: chartData.giro_cd.giros,
+    type: 'bar',
+    marker: { color: colors.secondary },
+    name: 'Giro'
+  }], {
+    font: openSansFont,
+    margin: { t: 20, r: 20, l: 60, b: 60 },
+    xaxis: { title: { text: 'Centro de Distribuição', standoff: 40 }, automargin: true },
+    yaxis: { title: { text: 'Taxa de Giro', standoff: 20 }, automargin: true },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent'
+  }, {responsive: true});
+
+  // 4. Gráfico de Cobertura por Filial
+  Plotly.newPlot('chart-cobertura-filial', [{
+    x: chartData.cobertura_filial.filiais,
+    y: chartData.cobertura_filial.coberturas,
+    type: 'bar',
+    marker: { color: colors.accent },
+    name: 'Dias Cobertura'
+  }], {
+    font: openSansFont,
+    margin: { t: 20, r: 20, l: 60, b: 80 },
+    xaxis: { title: { text: 'Filial', standoff: 40 }, tickangle: -45, automargin: true },
+    yaxis: { title: { text: 'Dias de Cobertura', standoff: 20 }, automargin: true },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent'
+  }, {responsive: true});
+</script>
 
 {% endblock %}
